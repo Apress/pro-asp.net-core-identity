@@ -1,4 +1,4 @@
-# Errata for *Book Title*
+# Errata for *Pro ASP.NET Core Identity*
 
 On **page xx** [Summary of error]:
  
