@@ -1,9 +1,9 @@
 # Apress Source Code
 
-This repository accompanies [*%title%*](https://www.apress.com/%isbn%) by %author% (Apress, %pubyear%).
+This repository accompanies [*Pro ASP.NET Core Identity*](https://www.apress.com/9781484268575) by Adam Freeman (Apress, 2021).
 
 [comment]: #cover
-![Cover image](%isbn%.jpg)
+![Cover image](9781484268575.jpg)
 
 Download the files as a zip using the green button, or clone the repository to your machine using Git.
 
