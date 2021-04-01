@@ -1,0 +1,70 @@
+﻿@page
+@model IdentityApp.Pages.Identity.Admin.LockoutsModel
+@{  
+    ViewBag.Workflow = "Lockouts";
+}
+
+<table class="table table-sm table-striped table-bordered">
+    <thead>
+        <tr><th class="text-center py-2" colspan="3">Locked Out Users</th></tr>
+    </thead>
+    <tbody>
+        @if (Model.LockedOutUsers.Count() == 0) {        
+            <tr>
+                <td colspan="3" class="py-2 text-center">
+                    No locked out users
+                </td>
+            </tr>
+        } else {
+            <tr><th>Email</th><th>Lockout Remaining</th><th/></tr>
+            @foreach (IdentityUser user in Model.LockedOutUsers) {
+                TimeSpan timeLeft = await Model.TimeLeft(user);
+                <tr>
+                    <td>@user.Email</td>
+                    <td>
+                        @timeLeft.Days days, @timeLeft.Hours hours, 
+                        @timeLeft.Minutes min, @timeLeft.Seconds secs
+                    </td>
+                    <td>
+                        <form method="post" asp-page-handler="unlock">
+                            <input type="hidden" name="id" value="@user.Id" />
+                            <button type="submit" class="btn btn-sm btn-success">
+                                Unlock Now
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table> 
+
+<table class="table table-sm table-striped table-bordered">
+    <thead>
+        <tr><th class="text-center py-2" colspan="2">Other Users</th></tr>
+    </thead>
+    <tbody>
+        @if (Model.OtherUsers.Count() == 0) {        
+            <tr>
+                <th colspan="2" class="py-2 text-center">
+                    All users locked out
+                </th>
+            </tr>
+        } else {
+            <tr><th>Email</th><th/></tr>
+            @foreach (IdentityUser user in Model.OtherUsers) {
+                <tr>
+                    <td>@user.Email</td>
+                    <td>
+                        <form method="post" asp-page-handler="lock">
+                            <input type="hidden" name="id" value="@user.Id" />
+                            <button type="submit" class="btn btn-sm btn-success">
+                                Lock Out
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

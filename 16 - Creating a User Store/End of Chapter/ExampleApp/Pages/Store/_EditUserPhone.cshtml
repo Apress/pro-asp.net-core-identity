@@ -1,0 +1,12 @@
+﻿@model AppUser
+@inject UserManager<AppUser> UserManager
+
+@if (UserManager.SupportsUserPhoneNumber) {
+    <tr>
+        <td>Phone</td>
+        <td>
+            <input class="w-00" asp-for="PhoneNumber" />
+            <input type="hidden" asp-for="PhoneNumberConfirmed" />
+        </td>
+    </tr>
+}

@@ -1,0 +1,26 @@
+﻿@{ 
+    var data = Context.Items["authReport"] as Dictionary<(string, string), bool>
+        ?? new Dictionary<(string, string), bool>();
+}
+
+<div class="m-2 p-2 border bg-light">
+    <h5 class="text-center">Authorization Summary</h5>
+    <table class="table table-sm table-bordered table-striped">
+        <thead><tr><th>User</th><th>Scheme</th><th>Result</th></tr></thead>
+        <tbody>
+            @if (data.Count() == 0) {
+                <tr><td colspan="3" class="text-center">No Data</td></tr>
+            }
+            @foreach (var result in data) {
+                <tr>
+                    <td>@result.Key.Item1</td>
+                    <td>@result.Key.Item2</td>
+                    <td class="text-white @(result.Value 
+                            ? "bg-success" : "bg-danger")">
+                        @(result.Value ? "Access Granted" : "Access Denied")
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

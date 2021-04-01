@@ -1,0 +1,26 @@
+﻿@page
+@using System.Security.Claims
+@using ExampleApp.Identity
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<AppUser> UserManager
+
+@{
+
+ string GetName(string claimType) =>
+            (Uri.IsWellFormedUriString(claimType, UriKind.Absolute)
+                ? System.IO.Path.GetFileName(new Uri(claimType).LocalPath)
+                : claimType);
+}
+
+<h4 class="bg-secondary text-white text-center p-2">
+    Live Claims for @(User.Identity.Name ?? "No User")
+</h4>
+
+<table class="table table-sm table-striped table-bordered">
+    <thead><tr><th>Type</th><th>Value</th></tr></thead>
+    <tbody>
+        @foreach (Claim claim in User.Claims) {
+            <tr><td>@GetName(claim.Type)</td><td>@claim.Value</td></tr>
+        }
+    </tbody>
+</table>

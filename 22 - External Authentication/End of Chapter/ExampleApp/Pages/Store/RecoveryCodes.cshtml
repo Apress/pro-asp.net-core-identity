@@ -1,0 +1,36 @@
+﻿@page "{id}"
+@model ExampleApp.Pages.Store.RecoveryCodesModel
+
+<h4 class="bg-primary text-white text-center p-2">Recovery Codes</h4>
+
+<h6 class="text-center">There are @Model.RemainingCodes codes remaining</h6>
+
+<div class="mx-5">
+    <table class="table table-sm table-striped table-bordered">
+        <tbody>
+            @for (int row = 0; row < Model.Codes.Length; row += 2) {
+                <tr>
+                    @for (int index = row; index < row + 2; index++) {
+                        var rc = Model.Codes[index];
+                        <td class="text-d">
+                            @if (rc.Redeemed) {
+                                <del>@rc.Code</del>
+                            } else {
+                                @rc.Code
+                            }
+                        </td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<div class="m-2 text-center">
+    <form method="post">
+        <input type="hidden" name="id" value="@Model.AppUser.Id" />
+        <button class="btn btn-primary">Generate New Codes</button>
+        <a href="@($"/users/edit/{Model.AppUser.Id}")" class="btn btn-secondary">
+            Cancel
+        </a>
+    </form>
+</div>

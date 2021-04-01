@@ -1,0 +1,36 @@
+﻿@page "/pages/admin"
+@model IdentityApp.Pages.AdminModel
+
+<h4 class="bg-info text-white text-center p-2">Pages Level 3 - Administrators</h4>
+
+<div class="p-2">
+    <table class="table table-sm table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>ID</th><th>Name</th><th>Category</th>
+                <th class="text-right">Price</th><th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (Product p in Model.DbContext.Products.OrderBy(p => p.Id)) {
+                <tr>
+                    <td>@p.Id</td>
+                    <td>@p.Name</td>
+                    <td>@p.Category</td>
+                    <td class="text-right">$@p.Price.ToString("F2")</td>
+                    <td class="text-center">
+                        <form method="post">
+                            <button class="btn btn-sm btn-danger" 
+                                asp-route-id="@p.Id">
+                                    Delete
+                            </button>
+                            <a class="btn btn-sm btn-warning" asp-page="Edit" 
+                                asp-route-id="@p.Id">Edit</a>
+                        </form>
+                    </td>
+                </tr>                
+            }
+        </tbody>
+    </table>
+</div>
+<a class="btn btn-info mx-2" asp-page="Edit">Create</a>

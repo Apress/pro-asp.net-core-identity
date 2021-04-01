@@ -1,0 +1,42 @@
+﻿@page
+@model IdentityApp.Pages.Identity.UserTwoFactorSetupModel
+@{
+    ViewBag.Workflow = "TwoFactor";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col">
+            <h6>Step 1:</h6>
+            Scan the QR Code or enter the following key into your authenticator:
+            <div><kbd>@Model.AuthenticatorKey</kbd> </div>
+        </div>
+        <div class="col-auto p-2">
+            <div id="qrCode"></div>
+            <div id="qrCodeData" data-url="@Html.Raw(@Model.QrCodeUrl)"></div>
+        </div>
+    </div>
+    <div>
+        <div class="row">
+            <div class="col">
+                <div asp-validation-summary="All" class="text-danger m-2"></div>
+                <form method="post" asp-page-handler="confirm">
+                    <h6>Step 2:</h6>
+                    Enter the code shown by your authenticator into the 
+                    text field and click the Confirm button
+                    <input name="confirm" placeholder="Enter code" 
+                        class="form-control my-2" />
+                    <button class="btn btn-primary" type="submit">Confirm</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="/lib/qrcode/qrcode.min.js"></script>
+    <script type="text/javascript">
+        new QRCode(document.getElementById("qrCode"), {
+            text: document.getElementById("qrCodeData").getAttribute("data-url"),
+            width: 150, height: 150
+        });          
+</script>

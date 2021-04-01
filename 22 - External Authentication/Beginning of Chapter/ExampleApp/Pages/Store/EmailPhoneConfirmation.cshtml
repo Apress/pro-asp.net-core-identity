@@ -1,0 +1,23 @@
+﻿@page "/validate/{id}/{dataType}/{dataValue?}"
+@model ExampleApp.Pages.Store.EmailPhoneConfirmationModel
+
+<div asp-validation-summary="All" class="text-danger m-2"></div>
+
+<h4 class="bg-primary text-white text-center p-2">Confirmation</h4>
+
+<div class="m-2">
+    <form method="post">
+        <input type="hidden" name="id" value="@Model.AppUser.Id" />
+        <input type="hidden" name="dataValue" value="@Model.DataValue" />
+        <div class="form-group">
+            <label>
+                Enter Confirmation Token
+            </label>
+            <input class="form-control" name="token" />
+        </div>
+        <button type="submit" class="btn btn-primary">Confirm</button>
+        <a href="@($"/users/edit/{Model.AppUser.Id}")" class="btn btn-secondary">
+            Cancel
+        </a>
+    </form>
+</div>

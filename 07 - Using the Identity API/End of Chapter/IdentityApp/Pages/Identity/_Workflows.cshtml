@@ -1,0 +1,10 @@
+﻿@model (string workflow, string theme)
+
+@{ 
+    Func<string, string> getClass = (string feature) => 
+        feature != null && feature.Equals(Model.workflow) ? "active" : "";
+}
+
+<a class="btn btn-@Model.theme btn-block @getClass("Overview")" asp-page="Index">
+    Overview
+</a>

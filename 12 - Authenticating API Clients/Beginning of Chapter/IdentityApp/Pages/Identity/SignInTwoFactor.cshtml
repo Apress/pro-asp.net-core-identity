@@ -1,0 +1,20 @@
+﻿@page "{returnUrl?}"
+@model IdentityApp.Pages.Identity.SignInTwoFactorModel
+@{
+    ViewData["showNav"] = false;
+    ViewData["banner"] = "Sign In";
+}
+
+<div asp-validation-summary="All" class="text-danger m-2"></div>
+
+<form method="post">
+    <div class="form-group">
+        <label>Authenticator Token or Recovery Code:</label>
+        <input class="form-control" asp-for="Token" />
+    </div>
+    <div class="form-check">
+        <input class="form-check-input" type="checkbox" asp-for="RememberMe" />
+        <label class="form-check-label" >Remember Me</label>
+    </div>
+    <button type="submit" class="btn btn-primary mt-2">Sign In</button>
+</form>

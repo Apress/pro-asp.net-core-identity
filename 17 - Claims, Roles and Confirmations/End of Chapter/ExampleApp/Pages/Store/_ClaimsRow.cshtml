@@ -1,0 +1,29 @@
+﻿@model (string id, Claim claim, bool newClaim)
+
+@{ string hash = Model.claim.GetHashCode().ToString(); }
+
+<td>
+    <form method="post" id="@hash">
+        <input type="hidden" name="id" value="@Model.id" />
+        <input type="hidden" name="oldtype" value="@Model.claim.Type" />
+        <input type="hidden" name="oldValue" value="@Model.claim.Value" />
+    </form>
+    <select name="type" asp-for="claim.Type" form="@hash">
+        <option value="@ClaimTypes.Role">ROLE</option>
+        <option value="@ClaimTypes.GivenName">GIVENNAME</option>
+        <option value="@ClaimTypes.Surname">SURNAME</option>
+    </select>
+</td>
+<td>
+    <input class="w-100" name="value" value="@Model.claim.Value" form="@hash" />
+</td>
+<td>
+    <button asp-page-handler="@(Model.newClaim ? "add" : "edit")" 
+        form="@hash" type="submit" class="btn btn-sm btn-info">
+            @(Model.newClaim ? "Add" : "Save")
+    </button>
+    @if (!Model.newClaim) {
+        <button asp-page-handler="delete" form="@hash" type="submit" 
+            class="btn btn-sm btn-danger">Delete</button>
+    }
+</td>

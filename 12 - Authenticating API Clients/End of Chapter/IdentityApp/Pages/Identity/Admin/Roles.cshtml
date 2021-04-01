@@ -1,0 +1,109 @@
+﻿@page "{id?}"
+@model IdentityApp.Pages.Identity.Admin.RolesModel
+@{  
+    ViewBag.Workflow = "Roles";
+}
+
+<div asp-validation-summary="All" class="text-danger m-2"></div>
+
+<table class="table table-sm table-striped table-bordered">
+    <thead><tr><th colspan="2" class="text-center">Master Role List</th></tr></thead>
+    <tbody>
+        @foreach (IdentityRole role in Model.RoleManager.Roles) {
+            int userCount = 
+                (await Model.UserManager.GetUsersInRoleAsync(role.Name)).Count;
+            <tr>
+                <td>@role.Name</td>
+                <td>
+                    @if (userCount == 0) {
+                        <form method="post" asp-page-handler="deleteFromList">
+                            <input type="hidden" name="role" value="@role.Name" />
+                            <button type="submit" class="btn btn-sm btn-danger">
+                                Delete
+                            </button>
+                        </form>
+                    } else {
+                        @: @userCount users in role
+                    }
+                </td>
+            </tr>
+        }
+        <tr>
+            <td>
+                <form method="post" asp-page-handler="addToList" id="addToListForm">
+                    <input class="form-control" name="role" />
+                </form>
+            </td>
+            <td>
+                <button type="submit" class="btn btn-sm btn-success" 
+                         form="addToListForm">
+                     Add
+                </button>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+
+<table class="table table-sm table-striped table-bordered">
+    <thead><tr><th colspan="2" class="text-center">User's Roles</th></tr></thead>
+    <tbody>
+        @if (Model.RoleManager.Roles.Count() == 0) {
+            <tr>
+                <td colspan="2" class="text-center py-2">
+                    No roles have been defined
+                </td>
+            </tr>
+        } else { 
+            @if(Model.CurrentRoles.Count() == 0) {
+                <tr>
+                    <td colspan="2" class="text-center py-2">
+                        User has no roles
+                    </td>
+                </tr>
+            } else {
+                @foreach (string role in Model.CurrentRoles) {
+                    <tr>
+                        <td>@role</td>
+                        <td>
+                            <form method="post" asp-page-handler="delete">
+                                <input type="hidden" asp-for="Id" />
+                                <input type="hidden" name="role" value="@role" />
+                                    <button type="submit" disabled="@(role== Model.DashboardRole)"
+                                        class="btn btn-sm btn-danger">
+                                    Delete
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            }
+            @if (Model.AvailableRoles.Count == 0) {
+                <tr>
+                    <td colspan="2" class="text-center py-2">
+                        User is in all roles
+                    </td>
+                </tr>
+            } else {
+                <tr>
+                    <td>
+                        <select class="form-control" name="role" form="addForm">
+                            <option selected disabled>Choose Role</option>
+                            @foreach (string role in Model.AvailableRoles) {
+                                <option>@role</option>
+                            }
+                        </select>
+                    </td>
+                    <td>
+                        <form method="post" asp-page-handler="add" id="addForm">
+                            <input type="hidden" asp-for="Id" />
+                            <button type="submit" class="btn btn-sm btn-success">
+                                Add
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

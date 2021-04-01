@@ -1,0 +1,37 @@
+﻿@page "/users/lockout"
+@model ExampleApp.Pages.Store.UserLockoutsModel
+
+<h4 class="bg-primary text-white text-center p-2">User Lockouts</h4>
+
+<div class="m-2">
+    <table class="table table-sm table-striped">
+        <thead><tr><th>Username</th><th>Lockout</th><th/></tr></thead>
+        <tbody>
+            @foreach (AppUser user in Model.Users) {
+                <tr>
+                    <td>@user.UserName</td>
+                    <td>@(await Model.GetLockoutStatus(user))</td>
+                    <td>
+                        <form method="post">
+                            <input type="hidden" name="id" value="@user.Id" />
+                            @if (await Model.UserManager.IsLockedOutAsync(user)) {
+                                <button class="btn btn-sm btn-secondary" 
+                                         type="submit">
+                                     Unlock
+                                </button>
+                            } else {
+                                <span class="mx-1">
+                                    <input type="number" name="mins" value="10" /> 
+                                    mins
+                                </span>
+                                <button class="btn btn-sm btn-danger" type="submit">
+                                    Lock
+                                </button>
+                            }
+                        </form>
+                    </td> 
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

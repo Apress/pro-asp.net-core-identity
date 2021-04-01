@@ -1,0 +1,19 @@
+﻿@model AppUser
+@inject UserManager<AppUser> UserManager
+
+@if (UserManager.SupportsUserEmail) {
+    <tr>
+        <td>Email</td>
+        <td>
+            <input class="w-00" asp-for="EmailAddress" />
+        </td>
+    </tr>
+    <tr>
+        <td>Normalized Email</td>
+        <td>
+            @(Model.NormalizedEmailAddress?? "(Not Set)")
+            <input type="hidden" asp-for="NormalizedEmailAddress" />
+            <input type="hidden" asp-for="EmailAddressConfirmed" />
+        </td>
+    </tr>
+}

@@ -1,0 +1,7 @@
+﻿@model Microsoft.AspNetCore.Authentication.AuthenticationScheme
+
+<button type="submit" 
+        class="btn btn-primary" name="provider" value="@Model.Name">
+    <i class="@($"fab fa-{Model.Name.ToLower()}")"></i>
+    @Model.DisplayName
+</button>

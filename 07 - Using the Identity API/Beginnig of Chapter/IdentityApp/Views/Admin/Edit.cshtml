@@ -1,0 +1,26 @@
+﻿@model Product
+
+<h4 class="bg-primary text-white text-center p-2">MVC Level 3 - Administrators</h4>
+
+<form method="post" asp-action="save" class="p-2">
+    <div class="form-group">
+        <label>ID</label>
+        <input class="form-control" readonly asp-for="Id" />
+    </div>
+    <div class="form-group">
+        <label>Name</label>
+        <input class="form-control" asp-for="Name" />
+    </div>
+    <div class="form-group">
+        <label>Category</label>
+        <input class="form-control" asp-for="Category" />
+    </div>
+    <div class="form-group">
+        <label>Price</label>
+        <input class="form-control" type="number" asp-for="Price" />
+    </div>
+    <div class="text-center">
+        <button type="submit" class="btn btn-primary">Save</button>
+        <a class="btn btn-secondary" asp-action="Index">Cancel</a>
+    </div>
+</form>

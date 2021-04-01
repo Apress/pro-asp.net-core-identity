@@ -1,0 +1,20 @@
+﻿@page
+@model IdentityApp.Pages.Identity.SignUpResendModel
+@{
+    ViewData["showNav"] = false;
+    ViewData["banner"] = "Account Confirmation";
+}
+
+<div asp-validation-summary="All" class="text-danger m-2"></div>
+
+@if (TempData.ContainsKey("message")) {
+    <div class="alert alert-success">@TempData["message"]</div>
+}
+
+<form method="post">
+    <div class="form-group">
+        <label>Your email address</label>
+        <input class="form-control" asp-for="Email" />
+    </div>
+    <button type="submit" class="btn btn-primary">Resend Email</button>
+</form>

@@ -1,0 +1,9 @@
+﻿@model AppUser
+@inject UserManager<AppUser> UserManager
+
+@if (UserManager.SupportsUserTwoFactor) {
+    <tr>
+        <td>Two-Factor</td>
+        <td><input asp-for="TwoFactorEnabled"/></td>
+    </tr>
+}

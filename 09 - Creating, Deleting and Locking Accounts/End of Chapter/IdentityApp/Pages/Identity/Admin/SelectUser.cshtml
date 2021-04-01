@@ -1,0 +1,53 @@
+﻿@page "{label?}/{callback?}"
+@model IdentityApp.Pages.Identity.Admin.SelectUserModel
+@{  
+    ViewBag.Workflow = Model.Callback ?? Model.Label ?? "List";
+}
+
+<form method="post" class="my-2">
+    <div class="form-row">
+        <div class="col">
+            <div class="input-group">
+                <input asp-for="Filter" class="form-control" />
+            </div>
+        </div>
+        <div class="col-auto">
+            <button class="btn btn-secondary">Filter</button>
+        </div>        
+    </div>
+</form>
+
+<table class="table table-sm table-striped table-bordered">
+    <thead>
+        <tr>
+            <th>User</th>
+            @if (!string.IsNullOrEmpty(Model.Callback)) {
+                <th/>
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.Users.Count() == 0) {
+            <tr><td colspan="2">No matches</td></tr>
+        } else {
+            @foreach (IdentityUser user in Model.Users) {
+                <tr>
+                    <td>@user.Email</td>
+                    @if (!string.IsNullOrEmpty(Model.Callback)) {
+                        <td class="text-center">
+                            <a asp-page="@Model.Callback" 
+                               asp-route-id="@user.Id" 
+                               class="btn btn-sm btn-secondary">
+                                @Model.Callback
+                            </a>
+                        </td>
+                    }
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+@if (!string.IsNullOrEmpty(Model.Callback)) {
+    <a asp-page="Dashboard" class="btn btn-secondary">Cancel</a>
+}

@@ -1,0 +1,25 @@
+﻿@page
+@model IdentityApp.Pages.Identity.UserRecoveryCodesModel
+@{
+    ViewBag.Workflow = "TwoFactor";
+}
+
+<h4 class="text-center">Recovery Codes</h4>
+
+<h6>
+    These recovery codes can be used to sign in if you don't have your authenticator.
+    Store these codes in a safe place. You won't be able to view them again.
+    Each code can only be used once.
+</h6>
+
+<table class="table table-sm table-striped">
+    <tbody>
+        @for (int i = 0; i < Model.RecoveryCodes.Length; i +=2 ) {
+            <tr>
+                <td><code>@Model.RecoveryCodes[i]</code></td>
+                <td><code>@Model.RecoveryCodes[i + 1]</code></td>
+            </tr>
+        }
+    </tbody>
+</table>
+<a asp-page="UserTwoFactorManage" class="btn btn-primary">OK</a>

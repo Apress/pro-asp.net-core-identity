@@ -1,0 +1,20 @@
+﻿@page
+@model IdentityApp.Pages.Identity.Admin.FeaturesModel
+@inject UserManager<IdentityUser> UserManager
+@{ 
+    ViewBag.Workflow = "Features";
+}
+
+<table class="table table-sm table-striped table-bordered">
+    <thead><tr><th>Property</th><th>Supported</th></tr></thead>
+    <tbody>
+        @foreach ((string prop, string val) in Model.Features) {
+            <tr>
+                <td>@prop</td>
+                <td class="@(val == "True" ? "bg-success" : "bg-danger") text-white">
+                    @val
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

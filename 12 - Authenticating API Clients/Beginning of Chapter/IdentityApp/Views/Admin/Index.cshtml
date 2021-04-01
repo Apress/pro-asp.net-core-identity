@@ -1,0 +1,35 @@
+﻿@model IQueryable<Product>
+
+<h4 class="bg-primary text-white text-center p-2">MVC Level 3 - Administrators</h4>
+
+<div class="p-2">
+    <table class="table table-sm table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>ID</th><th>Name</th><th>Category</th>
+                <th class="text-right">Price</th><th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (Product p in Model.OrderBy(p => p.Id)) {
+                <tr>
+                    <td>@p.Id</td>
+                    <td>@p.Name</td>
+                    <td>@p.Category</td>
+                    <td class="text-right">$@p.Price.ToString("F2")</td>
+                    <td class="text-center">
+                        <form method="post">
+                            <a class="btn btn-sm btn-warning" asp-action="edit" 
+                                asp-route-id="@p.Id">Edit</a>
+                            <button class="btn btn-sm btn-danger" 
+                                asp-action="delete" asp-route-id="@p.Id">
+                                    Delete
+                            </button>
+                        </form>
+                    </td>
+                </tr>                
+            }
+        </tbody>
+    </table>
+</div>
+<a class="btn btn-primary mx-2" asp-action="Create">Create</a>

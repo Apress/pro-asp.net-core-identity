@@ -1,0 +1,23 @@
+﻿@page "/identity/admin"
+@model IdentityApp.Pages.Identity.Admin.DashboardModel
+@{ 
+    ViewBag.Workflow = "Dashboard";
+}
+
+<div asp-validation-summary="All" class="text-danger m-2"></div>
+
+<table class="table table-sm table-striped table-bordered">
+    <tbody>
+        <tr><th>Users in store:</th><td>@Model.UsersCount</td></tr>
+        <tr><th>Unconfirmed accounts:</th><td>@Model.UsersUnconfirmed</td></tr>
+        <tr><th>Locked out users:</th><td>@Model.UsersLockedout</td></tr>
+        <tr>
+            <th>Users with two-factor enabled:</th>
+            <td>@Model.UsersTwoFactor</td>
+        </tr>
+    </tbody>
+</table>
+
+<form method="post">
+    <button class="btn btn-secondary" type="submit">Seed Database</button>
+</form>

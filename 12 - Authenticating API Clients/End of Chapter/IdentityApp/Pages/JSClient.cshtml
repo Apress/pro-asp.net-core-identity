@@ -1,0 +1,8 @@
+﻿@page
+@model IdentityApp.Pages.JSClientModel
+@attribute [Microsoft.AspNetCore.Authorization.Authorize]
+
+<div id="target" class="m-3">
+    Loading JavaScript client...
+</div>
+<script type="module" src="/js/client.js"></script>
