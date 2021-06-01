@@ -1,13 +1,20 @@
 # Errata for *Pro ASP.NET Core Identity*
 
-On **page xx** [Summary of error]:
- 
-Details of error here. Highlight key pieces in **bold**.
+**Chapter 12**
 
-***
+The example in the **Enabling CORS** section omits a configuration statement that allows the JavaScript code to send a cookie to the ASP.NET Core server. Add the following statement to the `Startup` class:
 
-On **page xx** [Summary of error]:
- 
-Details of error here. Highlight key pieces in **bold**.
+    opts.Cookie.SameSite = SameSiteMode.None; 
 
-***
+The statement should be included in the function passed to the `ConfigureApplicationCookie` method, like this:
+
+    services.ConfigureApplicationCookie(opts => {
+        opts.LoginPath = "/Identity/SignIn";
+        opts.LogoutPath = "/Identity/SignOut";
+        opts.AccessDeniedPath = "/Identity/Forbidden";
+        opts.Events.DisableRedirectionForApiClients();
+        opts.Cookie.SameSite = SameSiteMode.None; // <-- this statement
+    });
+
+(Thanks to Felix Rabinovich for reporting this problem)
+
