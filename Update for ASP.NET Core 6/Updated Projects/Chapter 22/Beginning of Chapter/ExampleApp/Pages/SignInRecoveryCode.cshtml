@@ -1,0 +1,19 @@
+﻿@page
+@model ExampleApp.Pages.SignInRecoveryCodeModel
+
+<h4 class="bg-info text-white m-2 p-2">Two Factor Sign In</h4>
+
+<div asp-validation-summary="All" class="text-danger m-2"></div>
+
+<div class="m-2">
+    <form method="post">
+        <div class="form-group">
+            <label>Enter Recovery Code:</label>
+            <input class="form-control" name="code"/>
+        </div>
+        <div class="mt-2">
+            <button class="btn btn-info" type="submit">Sign In</button>
+            <a asp-page="/Signin" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+</div>

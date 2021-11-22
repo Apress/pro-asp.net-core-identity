@@ -1,0 +1,51 @@
+﻿@page "/roles"
+@model ExampleApp.Pages.Store.RolesModel
+
+<h4 class="bg-secondary text-white text-center p-2">Roles</h4>
+
+<div asp-validation-summary="All" class="text-danger m-2"></div>
+
+<table class="table table-striped table-sm">
+    <thead>
+        <tr><th>Name</th><th># Users in Role</th><th># Claims</th><th/></tr>
+    </thead>
+    <tbody>
+        @foreach (AppRole role in Model.Roles) {
+            <tr>
+                <td class="pl-2">
+                    <input name="name" form="@role.Id" value="@role.Name" />
+                </td>
+                <td>@((await Model.GetUsersInRole(role)).Count())</td>
+                <td>@(role.Claims?.Count() ?? 0)
+                     <a asp-page="RoleClaims" class="btn btn-secondary btn-sm ml-2" 
+                            asp-route-id="@role.Id">Edit</a>
+                </td>
+                <td class="text-right pr-2">
+                    <form method="post" id="@role.Id">
+                        <input type="hidden" name="id" value="@role.Id" />
+                        <button type="submit" class="btn btn-danger btn-sm" 
+                            asp-page-handler="delete">Delete</button>
+                        <button type="submit" class="btn btn-info btn-sm" 
+                            asp-page-handler="save">Save</button>
+
+                    </form>
+                </td>
+            </tr>
+        }
+        <tr>
+            <td>
+                <input name="name" form="newRole" placeholder="Enter Role Name" />
+            </td>
+            <td></td>
+            <td></td>
+            <td class="text-right pr-2">
+                <form method="post" id="newRole">
+                    <button type="submit" class="btn btn-info btn-sm" 
+                            asp-page-handler="create">
+                        Create
+                    </button>
+                </form>
+            </td>
+        </tr>
+    </tbody>
+</table>

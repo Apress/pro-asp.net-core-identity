@@ -1,0 +1,38 @@
+﻿@page "{code:int?}"
+@model ExampleApp.Pages.SignInModel
+@using Microsoft.AspNetCore.Http
+
+@if (!string.IsNullOrEmpty(Model.Message)) {
+    <h3 class="bg-danger text-white text-center p-2">
+        @Model.Message
+    </h3>
+} 
+
+<h4 class="bg-info text-white m-2 p-2">
+    Current User: @Model.Username
+</h4>
+
+<div class="m-2">
+    <form method="post">
+        <div class="form-group">
+            <label>User</label>
+            <select class="form-control" 
+                    asp-for="Username" asp-items="@Model.Users">
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Password</label>
+            <input class="form-control" type="password" name="password" />
+        </div>
+        <button class="btn btn-info" type="submit">Sign In</button>
+        @if (User.Identity?.IsAuthenticated == true) {
+            <a asp-page="/Store/PasswordChange" class="btn btn-secondary"
+                asp-route-id="@Model.User?
+                        .FindFirst(ClaimTypes.NameIdentifier)?.Value">
+                    Change Password
+            </a>
+        } else {
+          <a class="btn btn-secondary" href="/password/reset">Reset Password</a>
+        }
+    </form>
+</div>

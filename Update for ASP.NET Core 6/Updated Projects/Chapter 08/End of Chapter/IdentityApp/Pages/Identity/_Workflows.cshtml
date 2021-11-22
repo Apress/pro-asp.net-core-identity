@@ -1,0 +1,20 @@
+﻿@model (string workflow, string theme)
+@inject UserManager<IdentityUser> UserManager
+@{ 
+    Func<string, string> getClass = (string feature) => 
+        feature != null && feature.Equals(Model.workflow) ? "active" : "";
+
+    IdentityUser identityUser 
+        = await UserManager.GetUserAsync(User) ?? new IdentityUser();
+}
+
+<a class="btn btn-@Model.theme btn-block @getClass("Overview")" asp-page="Index">
+    Overview
+</a>
+
+@if (await UserManager.HasPasswordAsync(identityUser)) {
+    <a class="btn btn-@Model.theme btn-block @getClass("PasswordChange")" 
+            asp-page="UserPasswordChange">
+        Change Password
+    </a>
+}

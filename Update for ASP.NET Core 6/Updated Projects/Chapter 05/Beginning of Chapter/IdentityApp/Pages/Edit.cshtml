@@ -1,0 +1,27 @@
+﻿@page "/pages/edit/{id:long?}"
+@model IdentityApp.Pages.EditModel
+
+<h4 class="bg-info text-white text-center p-2">Product Page</h4>
+
+<form method="post" class="p-2">
+    <div class="form-group">
+        <label>ID</label>
+        <input class="form-control" readonly asp-for="@Model.Product.Id" />
+    </div>
+    <div class="form-group">
+        <label>Name</label>
+        <input class="form-control" asp-for="@Model.Product.Name" />
+    </div>
+    <div class="form-group">
+        <label>Category</label>
+        <input class="form-control" asp-for="@Model.Product.Category" />
+    </div>
+    <div class="form-group">
+        <label>Price</label>
+        <input class="form-control" type="number" asp-for="@Model.Product.Price" />
+    </div>
+    <div class="text-center">
+        <button type="submit" class="btn btn-secondary">Save</button>
+        <a class="btn btn-secondary" asp-page="Admin">Cancel</a>
+    </div>
+</form>

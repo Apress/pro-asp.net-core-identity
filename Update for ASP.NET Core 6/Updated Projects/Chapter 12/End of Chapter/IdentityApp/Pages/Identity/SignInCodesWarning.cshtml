@@ -1,0 +1,13 @@
+﻿@page "{returnUrl?}"
+@model IdentityApp.Pages.Identity.SignInCodesWarningModel
+@{
+    ViewData["showNav"] = false;
+    ViewData["banner"] = "Sign In";
+}
+
+<div class="h6">
+    You are running out of recovery codes. 
+    Generate new codes using the user dashboard.
+</div>
+<a href="@Model.ReturnUrl" class="btn btn-primary my-2">Continue to application</a>
+<a asp-page="UserTwoFactorManage" class="btn btn-primary m-2">Go to dashboard</a>

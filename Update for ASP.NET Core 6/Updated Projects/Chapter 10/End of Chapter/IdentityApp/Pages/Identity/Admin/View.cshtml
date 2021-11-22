@@ -1,0 +1,26 @@
+﻿@page "{Id?}"
+@model IdentityApp.Pages.Identity.Admin.ViewModel
+@{
+        ViewBag.Workflow = "List";
+}
+
+<table class="table table-sm table-striped table-bordered">
+    <thead>
+        <tr><th>Property</th><th>Value</th></tr>
+    </thead>
+    <tbody>
+        @foreach (string name in Model.PropertyNames) {
+            <tr>
+                <td>@name</td>
+                <td class="text-truncate" style="max-width:250px">
+                    @Model.GetValue(name)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a asp-page="Edit" asp-route-id="@Model.Id" class="btn btn-secondary">
+    Edit
+</a>
+<a asp-page="View" asp-route-id="" class="btn btn-secondary">Back</a>

@@ -1,0 +1,43 @@
+﻿@page "{code:int?}"
+@model ExampleApp.Pages.SignInModel
+@using Microsoft.AspNetCore.Http
+
+@if (!string.IsNullOrEmpty(Model.Message)) {
+    <h3 class="bg-danger text-white text-center p-2">@Model.Message</h3>
+} 
+
+<h4 class="bg-info text-white m-2 p-2">Current User: @Model.Username</h4>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col">
+            <form method="post">
+                <div class="form-group">
+                    <label>User</label>
+                    <select class="form-control" 
+                            asp-for="Username" asp-items="@Model.Users">
+                    </select>
+                </div>
+                <button class="btn btn-info" type="submit">Sign In</button>
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col text-center p-2">
+            <div class="border p-2">
+                <h6>Create a New Account</h6>
+                <form method="post">
+                    @foreach (var scheme in await Model.SignInManager
+                            .GetExternalAuthenticationSchemesAsync()) {    
+                        <button class="btn btn-secondary m-2" type="submit"
+                            asp-page="/externalsignin" 
+                            asp-route-returnUrl="@Request.Query["returnUrl"]" 
+                            asp-route-providername="@scheme.Name">
+                                @scheme.DisplayName
+                        </button>
+                    }
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

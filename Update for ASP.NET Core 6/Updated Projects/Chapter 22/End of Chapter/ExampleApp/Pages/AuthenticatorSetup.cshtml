@@ -1,0 +1,57 @@
+﻿@page "{id}"
+@model ExampleApp.Pages.AuthenticatorSetupModel
+
+<h4 class="bg-primary text-white text-center p-2">Authenticator Key</h4>
+
+<div class="m-2">
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <th>User</th>
+                <td>@Model.AppUser.UserName</td>
+                @if (Model.AuthenticatorUrl != null) {
+                    <td rowspan="3">
+                        <div id="qrcode"></div>
+                        <script type="text/javascript" 
+                             src="~/lib/qrcode/qrcode.min.js"></script>
+                        <script type="text/javascript">
+                            new QRCode(document.getElementById("qrcode"), {
+                                text: "@Model.AuthenticatorUrl",
+                                width: 150,
+                                height: 150
+                            });
+                        </script>
+                    </td>
+                } 
+            </tr>
+            <tr>
+                <th>Authenticator Key</th>
+                <td>@(Model.AppUser.AuthenticatorKey ?? "(No Key)")</td>
+            </tr>
+            <tr>
+                <th>Authenticator Enabled</th>
+                <td>
+                    <span class="font-weight-bold 
+                          @(Model.AppUser.AuthenticatorEnabled 
+                              ? "text-success": "text-danger")">
+                        @Model.AppUser.AuthenticatorEnabled
+                    </span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<form method="post" class="m-1">
+    <input type="hidden" name="Id" value="@Model.Id" />
+    <div class="mt-2">
+        <button class="btn btn-primary m-1" asp-route-task="enable">
+            Enable Authenticator
+        </button>
+        <button class="btn btn-secondary m-1" asp-route-task="disable">
+            Disable Authenticator
+        </button>
+        <button class="btn btn-info m-1">Generate New Key</button>
+        <a href="/users" class="btn btn-secondary">Back</a>
+    </div>
+</form>

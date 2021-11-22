@@ -1,0 +1,20 @@
+﻿@model AppUser
+@inject UserManager<AppUser> UserManager
+
+@if (UserManager.SupportsUserPhoneNumber) {
+    <tr>
+        <td>Phone</td>
+        <td>
+            @if (await UserManager.FindByIdAsync(Model?.Id) == null) {
+                <input class="w-00" asp-for="PhoneNumber" />
+            } else {
+                @Model?.PhoneNumber
+                <input type="hidden" asp-for="PhoneNumber" />
+                <a asp-page="EmailPhoneChange" asp-route-id="@Model?.Id" 
+                   asp-route-datatype="phone"
+                   class="btn btn-sm btn-secondary align-top">Change</a>
+            }
+            <input type="hidden" asp-for="PhoneNumberConfirmed" />
+        </td>
+    </tr>
+}

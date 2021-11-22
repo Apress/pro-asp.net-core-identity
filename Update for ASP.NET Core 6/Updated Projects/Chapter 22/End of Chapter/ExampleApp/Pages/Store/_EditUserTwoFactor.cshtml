@@ -1,0 +1,19 @@
+﻿@model AppUser
+@inject UserManager<AppUser> UserManager
+
+@if (UserManager.SupportsUserTwoFactor) {
+    <tr>
+        <td>Two-Factor</td>
+        <td><input asp-for="TwoFactorEnabled"/></td>
+    </tr>
+}
+@if (UserManager.SupportsUserTwoFactorRecoveryCodes) {
+    <tr>
+        <td>Recovery Codes</td>
+        <td>
+            @(await UserManager.CountRecoveryCodesAsync(Model)) codes remaining
+                <a asp-page="RecoveryCodes" asp-route-id="@Model?.Id" 
+                   class="btn btn-sm btn-secondary align-top">Change</a>
+        </td>
+    </tr>
+}

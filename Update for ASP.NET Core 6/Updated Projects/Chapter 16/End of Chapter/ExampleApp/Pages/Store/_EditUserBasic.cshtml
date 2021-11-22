@@ -1,0 +1,18 @@
+﻿@model AppUser
+<tr>
+    <td>ID</td>
+    <td>@Model?.Id</td>
+</tr>
+<tr>
+    <td>Username</td>
+    <td>
+        <input class="w-00" asp-for="UserName" />
+    </td>
+</tr>
+<tr>
+    <td>Normalized UserName</td>
+    <td>
+        @(Model?.NormalizedUserName ?? "(Not Set)")
+        <input type="hidden" asp-for="NormalizedUserName" />
+    </td>
+</tr>

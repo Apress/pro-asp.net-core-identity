@@ -1,0 +1,35 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Identity App</title>
+    <link rel="stylesheet" href="/Identity/lib/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="/Identity/css/site.css" />
+    <script src="/Identity/lib/jquery/dist/jquery.js"></script>
+    <script src="/Identity/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
+    <script src="/Identity/js/site.js" asp-append-version="true"></script>
+    @*<script type="text/javascript" src="/lib/qrcode/qrcode.min.js"></script>*@
+    <link href="/lib/font-awesome/css/all.min.css" rel="stylesheet" />
+</head>
+<body>
+    <nav class="navbar navbar-dark bg-secondary">
+        <a class="navbar-brand text-white">IdentityApp</a>
+        <div class="text-white"><partial name="_LoginPartial" /></div>
+    </nav>
+    <div class="m-2">
+        @RenderBody()
+        @await RenderSectionAsync("Scripts", required: false)
+    </div>
+    @*<script type="text/javascript">
+        var element = document.getElementById("qrCode");
+        if (element !== null) {
+            new QRCode(element, {
+                text: document.getElementById("qrCodeData").getAttribute("data-url"),
+                width: 150, height: 150
+            });
+            element.previousElementSibling?.remove();
+        }                            
+    </script>*@
+</body>
+</html>

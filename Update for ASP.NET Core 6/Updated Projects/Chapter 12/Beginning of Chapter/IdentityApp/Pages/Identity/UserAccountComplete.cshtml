@@ -1,0 +1,60 @@
+﻿@page "{email?}/{token?}"
+@model IdentityApp.Pages.Identity.UserAccountCompleteModel
+@inject SignInManager<IdentityUser> SignInManager
+@{
+    ViewData["showNav"] = false;
+    ViewData["banner"] = "Complete Account";
+}
+
+@if (string.IsNullOrEmpty(Model.Token) || string.IsNullOrEmpty(Model.Email)) {
+    <div class="h6 text-center">
+        <div class="p-2">
+            Check your inbox for a confirmation email and click the link it contains.
+        </div>
+    </div>
+} else {
+    <div asp-validation-summary="All" class="text-danger m-2"></div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col mb-3">
+                <div class="form-group">
+                    <label>Email</label>
+                    <input class="form-control" asp-for="Email" readonly />
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <h6>Sign In with a Password</h6>
+                <form method="post">
+                    <input type="hidden" asp-for="Token" />
+                    <input type="hidden" asp-for="Email" />
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input class="form-control" type="password" 
+                            name="password" />
+                    </div>
+                    <div class="form-group">
+                        <label>Confirm Password</label>
+                        <input class="form-control" type="password" 
+                             name="confirmpassword" />
+                    </div>
+                    <button class="btn btn-primary" type="submit">
+                        Finish and Sign In
+                    </button>
+                </form>
+            </div>
+            <div class="col-auto">
+                <h6>Sign In with a Social Media Account</h6>
+                <form method="post" asp-page="UserAccountCompleteExternal">
+                    <input type="hidden" asp-for="Email" />
+                    <input type="hidden" asp-for="Token" />
+                    @foreach (var scheme in await
+                            SignInManager.GetExternalAuthenticationSchemesAsync()) {
+                        <partial name="_ExternalButtonPartial" model="scheme" />
+                    }
+                </form>
+            </div>
+        </div>
+    </div>    
+}

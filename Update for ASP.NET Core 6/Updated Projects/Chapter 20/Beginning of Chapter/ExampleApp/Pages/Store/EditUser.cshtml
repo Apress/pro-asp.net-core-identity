@@ -1,0 +1,25 @@
+﻿@page "/users/edit/{id?}"
+@model ExampleApp.Pages.Store.UsersModel
+
+<div asp-validation-summary="All" class="text-danger m-2"></div>
+
+<div class="m-2">
+    <form method="post">
+        <input type="hidden" name="id" value="@Model.AppUserObject.Id" />    
+        <table class="table table-sm table-striped">
+            <tbody>
+                <partial name="_EditUserBasic" model="@Model.AppUserObject" />
+                <partial name="_EditUserEmail" model="@Model.AppUserObject" />
+                <partial name="_EditUserPhone" model="@Model.AppUserObject" />
+                <partial name="_EditUserCustom" model="@Model.AppUserObject" />
+                <partial name="_EditUserPassword" model="@Model.AppUserObject" />
+                <partial name="_EditUserSecurityStamp" 
+                         model="@Model.AppUserObject" />
+            </tbody>
+        </table>
+        <div>
+            <button type="submit" class="btn btn-primary">Save</button>
+            <a asp-page="users" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+</div>

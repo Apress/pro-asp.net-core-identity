@@ -1,0 +1,9 @@
+﻿@model AppUser
+@inject UserManager<AppUser> UserManager
+
+@if (UserManager.SupportsUserSecurityStamp) {
+    <tr>
+        <td>Security Stamp</td>
+        <td>@Model?.SecurityStamp</td>
+    </tr>
+}

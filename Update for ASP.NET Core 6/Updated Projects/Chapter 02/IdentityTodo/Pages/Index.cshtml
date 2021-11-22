@@ -1,0 +1,61 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "To Do List";
+}
+
+<h2 class="text-center">To Do List</h2>
+<h4 class="text-center">(@User.Identity?.Name)</h4>
+
+<form method="post" asp-page-handler="ShowComplete" class="m-2">
+    <div class="form-check">
+        <input type="checkbox" class="form-check-input" asp-for="ShowComplete" 
+               onchange="this.form.submit()"/>
+        <label class="form-check-label">Show Completed Items</label>
+    </div>
+</form>
+
+<table class="table table-sm table-striped table-bordered m-2">
+    <thead><tr><th>Task</th><th/></tr></thead>
+    <tbody>
+        @if (Model.TodoItems.Count() == 0) {
+            <tr>
+                <td colspan="2" class="text-center py-4">
+                    You have done everything!
+                </td>
+            </tr>
+        } else {
+            @foreach (TodoItem item in Model.TodoItems) {
+                <tr>
+                    <td class="p-2">@item.Task</td>
+                    <td class="text-center py-2">
+                        <form method="post" asp-page-handler="MarkItem">
+                            <input type="hidden" name="id" value="@item.Id" />
+                            <input type="hidden" asp-for="ShowComplete" />
+                            <button type="submit" class="btn btn-sm btn-secondary">
+                                @(item.Complete ? "Mark Not Done" : "Done")
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <td class="pt-4">
+                <form method="post" asp-page-handler="AddItem" id="addItem">
+                    <input type="hidden" asp-for="ShowComplete" />
+                    <input name="task" placeholder="Enter new to do" 
+                        class="form-control" />
+                </form>
+            </td>
+            <td class="text-center pt-4">
+                <button type="submit" form="addItem" 
+                        class="btn btn-sm btn-secondary">
+                    Add
+                </button>
+            </td>
+        </tr>
+    </tfoot>
+</table>

@@ -1,0 +1,14 @@
+﻿<nav class="nav">
+    @if (User.Identity?.IsAuthenticated == true) { 
+        <a asp-page="/Identity/Index" class="nav-link bg-secondary text-white">
+                @User.Identity.Name
+        </a>
+        <a asp-page="/Identity/SignOut" class="nav-link bg-secondary text-white">
+            Sign Out
+        </a>
+    } else {
+        <a asp-page="/Identity/SignIn" class="nav-link bg-secondary text-white">
+            Sign In/Register
+        </a>
+    }
+</nav>

@@ -1,0 +1,29 @@
+﻿@page
+@model IdentityApp.Pages.Identity.UserTwoFactorManageModel
+@{
+    ViewBag.Workflow = "TwoFactor";
+}
+
+<div asp-validation-summary="All" class="text-danger m-2"></div>
+
+@if (await Model.IsTwoFactorEnabled()) {
+    <div class="text-center">
+        <div class="h6 m-2">Your account is configured to use an authenticator</div>
+        <div>
+            <form method="post">
+                <button type="submit" class="btn btn-primary m-1" 
+                        asp-page-handler="GenerateCodes">
+                    Generate New Recovery Codes
+                </button>
+                <button type="submit" class="btn btn-warning m-1" 
+                        asp-page-handler="Disable">
+                    Disable Authenticator and Sign Out
+                </button>
+            </form>
+        </div>
+    </div>
+    
+} else {
+    <h6>Your account is not configured to use an authenticator.</h6>
+    <a asp-page="UserTwoFactorSetup" class="btn btn-primary">Enable Authenticator</a>
+}

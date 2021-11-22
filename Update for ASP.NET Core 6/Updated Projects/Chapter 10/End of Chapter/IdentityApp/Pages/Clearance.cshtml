@@ -1,0 +1,15 @@
+﻿@page
+
+@{ 
+    Func<string, bool> HasClearance = (string level) 
+        => User.HasClaim(ApplicationClaimTypes.SecurityClearance, level);
+}
+
+<table class="table table-sm table-striped table-bordered">
+    <thead><tr><th>Clearance Level</th><th>Granted</th></tr></thead>
+    <tbody>
+        <tr><td>Secret</td><td>@HasClearance("Secret")</td></tr>
+        <tr><td>Very Secret</td><td>@HasClearance("VerySecret")</td></tr>
+        <tr><td>Super Secret</td><td>@HasClearance("SuperSecret")</td></tr>
+    </tbody>
+</table>

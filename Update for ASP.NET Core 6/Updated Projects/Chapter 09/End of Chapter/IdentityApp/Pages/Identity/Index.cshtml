@@ -1,0 +1,12 @@
+﻿@page
+@model IdentityApp.Pages.Identity.IndexModel
+@{ 
+    ViewBag.Workflow = "Overview";
+}
+
+<table class="table table-sm table-striped table-bordered">
+    <tbody>
+        <tr><th>Email</th><td>@Model.Email</td></tr>
+        <tr><th>Phone</th><td>@Model.Phone</td></tr>    
+    </tbody>
+</table>

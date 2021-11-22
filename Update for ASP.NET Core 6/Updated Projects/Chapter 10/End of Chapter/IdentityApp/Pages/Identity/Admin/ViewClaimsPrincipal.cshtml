@@ -1,0 +1,31 @@
+﻿@page "{id?}/{callback?}"
+@model IdentityApp.Pages.Identity.Admin.ViewClaimsPrincipalModel 
+@{  
+    ViewBag.Workflow = "ClaimsPrincipal";
+    ViewBag.WorkflowLabel = "View ClaimsPrincipal";
+    int counter = 0;
+}
+
+@foreach (ClaimsIdentity ident in Model.Principal.Identities) { 
+    <table class="table table-sm table-striped table-bordered pt-3">
+        <thead>
+            <tr><th colspan="3" class="text-center">Identity #@(++counter)</th></tr>
+        </thead>
+        <tbody>
+            <tr><th>Type</th><th>Value</th><th>Issuer</th></tr>
+            @foreach (Claim c in ident.Claims) {
+                <tr>
+                   <td>@c.GetDisplayName()</td>
+                   <td class="text-truncate" style="max-width:250px">@c.Value</td>
+                   <td>@c.Issuer</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@if (!string.IsNullOrEmpty(Model.Callback)) {
+    <a asp-page="@Model.Callback" class="btn btn-secondary" asp-route-id="@Model.Id">
+        Back
+    </a>
+}

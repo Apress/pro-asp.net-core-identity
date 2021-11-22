@@ -1,0 +1,21 @@
+﻿@page "{email?}/{token?}"
+@model IdentityApp.Pages.Identity.SignUpConfirmModel
+@{
+    ViewData["showNav"] = false;
+    ViewData["banner"] = "Account Confirmation";
+}
+
+@if (Model.ShowConfirmedMessage) {
+    <div class="text-center">
+        <h6 class="p-2">Account confirmed</h6>
+        <a asp-page="SignIn" class="btn btn-primary">Sign In</a>
+    </div>
+} else {
+    <div class="text-center">
+        <h6 class="p-2">
+            Check your inbox for a confirmation email and 
+            click the link it contains.
+        </h6>
+        <a asp-page="SignUpResend" class="btn btn-primary">Resend Email</a>
+    </div>
+}

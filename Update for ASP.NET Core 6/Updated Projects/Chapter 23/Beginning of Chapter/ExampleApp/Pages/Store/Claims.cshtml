@@ -1,0 +1,29 @@
+﻿@page "/users/claims/{id?}"
+@model ExampleApp.Pages.Store.ClaimsModel
+
+@{ 
+    Claim newClaim = new Claim(string.Empty, string.Empty);
+}
+
+<h4 class="bg-primary text-white text-center p-2">Claims</h4>
+
+<div class="m-2">
+    <table class="table table-sm table-striped">
+        <thead><tr><th>Type</th><th>Value</th><th/></tr></thead>
+        <tbody>
+            @foreach (Claim claim in Model.Claims) {
+                <tr>
+                    <partial name="_ClaimsRow" 
+                        model="@((Model.AppUserObject.Id, claim, false))" />
+                </tr>
+            }
+            <tr>
+                <partial name="_ClaimsRow" 
+                    model="@((Model.AppUserObject.Id, newClaim, true))" />
+            </tr>
+        </tbody>
+    </table>
+    <div>
+        <a asp-page="users" class="btn btn-secondary">Back</a>
+    </div>
+</div>

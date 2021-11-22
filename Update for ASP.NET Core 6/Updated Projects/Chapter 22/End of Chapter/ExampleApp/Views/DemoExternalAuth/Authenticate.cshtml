@@ -1,0 +1,44 @@
+﻿@model (ExampleApp.Controllers.ExternalAuthInfo info, string error)
+
+@{ 
+    IEnumerable<(string, string?)> KeyValuePairs =
+        typeof(ExampleApp.Controllers.ExternalAuthInfo).GetProperties()
+            .Select(pi => (pi.Name, pi.GetValue(Model.info)?.ToString()));
+}
+
+<div class="bg-dark text-white p-2">
+    <h4 class="text-center">Demo External Authentication Service</h4>
+    <div class="bg-light text-dark m-4 p-5 border">
+
+        @if (!string.IsNullOrEmpty(Model.error)) {
+            <div class="h3 bg-danger text-white text-center m-2 p-2">
+                <div>Something Went Wrong</div> 
+                <div class="h5">(@Model.error)</div>
+            </div>
+        } else {
+            <div asp-validation-summary="All" class="text-danger m-2"></div>
+            <form method="post" asp-action="Authenticate">
+                @foreach (var tuple in KeyValuePairs) {
+                    if (!string.IsNullOrEmpty(tuple.Item2)) {
+                        <input type="hidden" name="@tuple.Item1" 
+                            value="@tuple.Item2" />
+                    }
+                }
+                <div class="p-2">
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input name="email" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input name="password" type="password" 
+                            class="form-control" />
+                    </div>
+                    <button type="submit" class="btn btn-sm btn-dark">
+                        Authenticate & Return
+                    </button>
+                </div>
+            </form>  
+        }
+    </div>
+</div>

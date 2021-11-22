@@ -1,0 +1,27 @@
+﻿@model AppUser
+@inject UserManager<AppUser> UserManager
+
+@if (UserManager.SupportsUserEmail) {
+    <tr>
+        <td>Email</td>
+        <td>
+            @if (await UserManager.FindByIdAsync(Model?.Id) == null) {
+                <input class="w-00" asp-for="EmailAddress" />
+            } else {
+                @Model?.EmailAddress
+                <input type="hidden" asp-for="EmailAddress" />
+                <a asp-page="EmailPhoneChange" asp-route-id="@Model?.Id" 
+                   asp-route-datatype="email"
+                   class="btn btn-sm btn-secondary align-top">Change</a>
+            }
+        </td>
+    </tr>
+    <tr>
+        <td>Normalized Email</td>
+        <td>
+            @(Model?.NormalizedEmailAddress?? "(Not Set)")
+            <input type="hidden" asp-for="NormalizedEmailAddress" />
+            <input type="hidden" asp-for="EmailAddressConfirmed" />
+        </td>
+    </tr>
+}

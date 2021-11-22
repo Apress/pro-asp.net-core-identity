@@ -1,0 +1,47 @@
+﻿@page "/users/{searchname?}"
+@model ExampleApp.Pages.Store.FindUserModel
+
+<div class="m-2">
+     <form method="get" class="mb-2" action="/users">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-9">
+                    <input name="searchname" class="w-100" value="@Model.Searchname" 
+                        placeholder="Enter Username or ID" />
+                </div>
+                <div class="col-auto">
+                    <button type="submit" 
+                        class="btn btn-primary btn-sm">Find</button>
+                    <a class="btn btn-secondary btn-sm" href="/users">Clear</a>
+                </div>
+            </div>
+        </div>
+    </form>
+    @if (Model.Users?.Count() > 0) {
+        <table class="table table-sm table-striped table-bordered">
+            <thead>
+                <tr><th>Username</th><th>Normalized</th><th/></tr>
+            </thead>
+            <tbody>
+                @foreach (AppUser user in Model.Users) {
+                    <tr>
+                        <td>@user.UserName</td>
+                        <td>@user.NormalizedUserName</td>
+                        <td>
+                            <form asp-page-handler="delete" method="post">
+                                <partial name="_UserTableRow" model="@user.Id" />
+                                <input type="hidden" name="id" value="@user.Id" />
+                                <button type="submit" class="btn btn-sm btn-danger">
+                                    Delete
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    } else if (!string.IsNullOrEmpty(Model.Searchname)) {
+        <h6>No match</h6>
+    }
+    <a asp-page="edituser" class="btn btn-primary">Create</a>
+</div>

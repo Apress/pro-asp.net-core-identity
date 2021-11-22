@@ -1,0 +1,37 @@
+﻿@page "{Id?}"
+@model IdentityApp.Pages.Identity.Admin.EditModel
+@{  
+    ViewBag.Workflow = "Edit";
+}
+
+<div asp-validation-summary="All" class="text-danger m-2"></div>
+
+<form method="post">
+    <input type="hidden" asp-for="Id" />
+    <div class="form-group">
+        <label>Username</label>
+        <input class="form-control" asp-for="IdentityUser.UserName" readonly />
+    </div>    
+    <div class="form-group">
+        <label>Normalized Username</label>
+        <input class="form-control" asp-for="IdentityUser.NormalizedUserName" 
+            readonly />
+    </div>    
+    <div class="form-group">
+        <label>Email</label>
+        <input class="form-control" asp-for="IdentityUser.Email" />
+    </div>
+    <div class="form-group">
+        <label>Normalized Email</label>
+        <input class="form-control" 
+            asp-for="IdentityUser.NormalizedEmail" readonly />
+    </div>
+    <div class="form-group">
+        <label>Phone Number</label>
+        <input class="form-control" asp-for="IdentityUser.PhoneNumber" />
+    </div>    
+    <div>
+        <button type="submit" class="btn btn-success">Save</button>
+        <a asp-page="Dashboard" class="btn btn-secondary">Cancel</a>
+    </div>
+</form>

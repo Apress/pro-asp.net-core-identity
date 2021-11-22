@@ -1,0 +1,68 @@
+﻿@page "{id?}"
+@model IdentityApp.Pages.Identity.Admin.ClaimsModel
+@{  
+    ViewBag.Workflow = "Claims";
+    int FormCounter = 0;
+}
+
+<div asp-validation-summary="All" class="text-danger m-2"></div>
+
+<table class="table table-sm table-bordered table-striped">
+    <thead><tr><th>Type</th><th>Value</th><th>Issuer</th><th/></tr></thead>
+    <tbody>
+        @if (Model.Claims?.Count() > 0) {
+            @foreach (Claim c in Model.Claims) {
+                <tr>
+                    <td>@c.GetDisplayName()</td>
+                    <td>
+                        <form method="post" id="@(++FormCounter)">
+                            <input type="hidden" asp-for="Id" />
+                            <input type="hidden" name="type" value="@c.Type" />
+                            <input type="hidden" name="oldValue" value="@c.Value" />
+                            <input class="form-control" name="value" 
+                                value="@c.Value" />
+                        </form>
+                    </td>
+                    <td>@c.Issuer</td>
+                    <td>
+                        <button class="btn btn-sm btn-warning" form="@(FormCounter)" 
+                                asp-route-task="change">Change</button>
+                        <button class="btn btn-sm btn-danger" form="@(FormCounter)" 
+                                asp-route-task="delete">Delete</button>
+                    </td>
+                </tr>
+            }
+        } else {
+            <tr><th colspan="4" class="text-center py-3">User has no claims</th></tr>
+        }
+        </tbody>
+        <tfoot>
+            <tr><th colspan="4" class="text-center pt-3">Add New Claim</th></tr>
+            <tr>
+                <td>
+                    <form method="post" id="addClaim" asp-route-task="add">
+                        <select class="form-control" name="type">
+                            @foreach (var claimType in 
+                                    ApplicationClaimTypes.AppClaimTypes) {
+                                <option value="@claimType.type">
+                                     @claimType.display
+                                </option>
+                            }
+                        </select>
+                    </form>    
+                </td>
+                <td colspan="2">
+                    <input class="form-control" form="addClaim" name="value" />
+                </td>
+                <td>
+                    <button type="submit" form="addClaim" 
+                        class="btn btn-sm btn-success">Add</button>
+                </td>
+            </tr>
+        </tfoot>
+</table>
+
+<a asp-page="ViewClaimsPrincipal" class="btn btn-secondary" 
+        asp-route-id="@Model.Id" asp-route-callback="Claims">
+    View Claims Principal
+</a>

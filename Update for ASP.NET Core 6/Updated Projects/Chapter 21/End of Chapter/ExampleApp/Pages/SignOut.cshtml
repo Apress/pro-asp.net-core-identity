@@ -1,0 +1,15 @@
+﻿@page
+@model ExampleApp.Pages.SignOutModel
+
+<h4 class="bg-info text-white m-2 p-2">
+    Current User: @Model.Username
+</h4>
+<div class="m-2">
+    <form method="post" >
+        <div class="form-check m-2">
+            <input class="form-check-input" type="checkbox" name="forgetMe" />
+            <label class="form-check-label">Forget Me</label>
+        </div>
+        <button class="btn btn-info" type="submit">Sign Out</button>
+    </form>
+</div>

@@ -1,0 +1,21 @@
+﻿@page "{id?}"
+@model IdentityApp.Pages.Identity.Admin.DeleteModel
+@{  
+    ViewBag.Workflow = "Delete";
+}
+
+<div asp-validation-summary="All" class="text-danger m-2"></div>
+
+<form method="post">
+
+    <h3 class="bg-danger text-white text-center p-2">Caution</h3>
+
+    <h5 class="text-center m-2">
+        Delete @Model.IdentityUser.Email?
+    </h5>
+    <input type="hidden" name="id" value="@Model.IdentityUser.Id" />
+    <div class="text-center p-2">
+        <button type="submit" class="btn btn-danger">Delete</button>
+        <a asp-page="Dashboard" class="btn btn-secondary">Cancel</a>
+    </div>
+</form>

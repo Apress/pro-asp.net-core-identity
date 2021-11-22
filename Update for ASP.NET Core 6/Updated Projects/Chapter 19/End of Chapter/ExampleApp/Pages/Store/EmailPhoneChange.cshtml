@@ -1,0 +1,20 @@
+﻿@page "/change/{id}/{dataType}"
+@model ExampleApp.Pages.Store.EmailPhoneChangeModel
+
+<h4 class="bg-primary text-white text-center p-2">Change</h4>
+
+<div class="m-2">
+    <form method="post">
+        <div class="form-group">
+            <label>
+                @Model.LabelText
+            </label>
+            <input class="form-control" name="dataValue" 
+                value="@Model.CurrentValue" />
+        </div>
+        <button type="submit" class="btn btn-primary">Change</button>
+        <a href="@($"/users/edit/{Model.AppUser.Id}")" class="btn btn-secondary">
+            Cancel
+        </a>
+    </form>
+</div>

@@ -1,0 +1,45 @@
+﻿@page "/users/roles/{id?}"
+@model ExampleApp.Pages.Store.UserRolesModel
+
+<h4 class="bg-primary text-white text-center p-2">Roles</h4>
+<div class="m-2">
+    <table class="table table-sm table-striped">
+        <thead><tr><th>Role</th><th/></tr></thead>
+        <tbody>
+            @foreach (string role in Model.Roles) {
+                <tr>
+                    <td>@role</td>
+                    <td>
+                        <form method="post">
+                            <input type="hidden" name="id" value="@Model.Id" />
+                            <input type="hidden" name="role" value="@role" />
+                            <button type="submit" class="btn btn-sm btn-danger" 
+                                    asp-page-handler="delete">
+                                Delete
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            }
+            <tr>
+                <td>
+                    <form method="post" id="newRole">
+                        <input type="hidden" name="id" value="@Model.Id" />
+                        <select asp-items="@Model.AvailableRoles" 
+                            name="newRole" class="w-100">
+                        </select>
+                    </form>
+                </td>
+                <td>
+                    <button type="submit" class="btn btn-sm btn-primary" 
+                            asp-page-handler="add" form="newRole">
+                        Add
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div>
+        <a asp-page="users" class="btn btn-secondary">Back</a>
+    </div>
+</div>
